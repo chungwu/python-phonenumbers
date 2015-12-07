@@ -22,7 +22,7 @@ with Java regular expression code.
 1
 """
 import re
-
+import cachetools
 
 def fullmatch(pattern, string, flags=0):
     """Try to apply the pattern at the start of the string, returning a match
@@ -30,13 +30,17 @@ def fullmatch(pattern, string, flags=0):
     # Build a version of the pattern with a non-capturing group around it.
     # This is needed to get m.end() to correctly report the size of the
     # matched expression (as per the final doctest above).
-    grouped_pattern = re.compile("^(?:%s)$" % pattern.pattern, pattern.flags)
+    grouped_pattern = re_compile("^(?:%s)$" % pattern.pattern, pattern.flags)
     m = grouped_pattern.match(string)
     if m and m.end() < len(string):
         # Incomplete match (which should never happen because of the $ at the
         # end of the regexp), treat as failure.
         m = None  # pragma no cover
     return m
+
+@cachetools.func.lru_cache(maxsize=4096)
+def re_compile(pattern, flags=0):
+    return re.compile(pattern, flags)
 
 if __name__ == '__main__':  # pragma no cover
     import doctest
