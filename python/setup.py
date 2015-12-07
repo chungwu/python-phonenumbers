@@ -15,14 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import distutils.core
 import sys
-# Importing setuptools adds some features like "setup.py test", but
-# it's optional so swallow the error if it's not there.
-try:
-    import setuptools
-except ImportError:
-    pass
+from setuptools import setup
 
 major, minor = sys.version_info[:2]
 python_25 = (major > 2 or (major == 2 and minor >= 5))
@@ -56,25 +50,26 @@ else:
             'phonenumbers.carrierdata', 'phonenumbers.tzdata']
     pkgstatus = 'Development Status :: 5 - Production/Stable'
 
-distutils.core.setup(name=pkgname,
-                     version=__version__,
-                     description="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers.",
-                     author='David Drysdale',
-                     author_email='dmd@lurklurk.org',
-                     url='https://github.com/daviddrysdale/python-phonenumbers',
-                     license='Apache License 2.0',
-                     packages=pkgs,
-                     test_suite="tests.examplenumberstest",
-                     platforms='Posix; MacOS X; Windows',
-                     classifiers=['Development Status :: 5 - Production/Stable',
-                                  'Intended Audience :: Developers',
-                                  'License :: OSI Approved :: Apache Software License',
-                                  'Operating System :: OS Independent',
-                                  'Topic :: Communications :: Telephony',
-                                  'Programming Language :: Python :: 2',
-                                  'Programming Language :: Python :: 2.5',
-                                  'Programming Language :: Python :: 2.6',
-                                  'Programming Language :: Python :: 2.7',
-                                  'Programming Language :: Python :: 3',
-                                  ],
-                     )
+setup(name=pkgname,
+      version=__version__,
+      description="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers.",
+      author='David Drysdale',
+      author_email='dmd@lurklurk.org',
+      url='https://github.com/daviddrysdale/python-phonenumbers',
+      license='Apache License 2.0',
+      packages=pkgs,
+      test_suite="tests.examplenumberstest",
+      platforms='Posix; MacOS X; Windows',
+      install_requires = ['cachetools'],
+      classifiers=['Development Status :: 5 - Production/Stable',
+                   'Intended Audience :: Developers',
+                   'License :: OSI Approved :: Apache Software License',
+                   'Operating System :: OS Independent',
+                   'Topic :: Communications :: Telephony',
+                   'Programming Language :: Python :: 2',
+                   'Programming Language :: Python :: 2.5',
+                   'Programming Language :: Python :: 2.6',
+                   'Programming Language :: Python :: 2.7',
+                   'Programming Language :: Python :: 3',
+                   ],
+      )
