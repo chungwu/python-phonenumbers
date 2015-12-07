@@ -26,11 +26,8 @@ if not python_25:
 # Add ./python/ subdirectory to path
 sys.path.append('python')
 
-# Discover version of phonenumbers package
-from phonenumbers import __version__
-
 setup(name='phonenumbers',
-      version=__version__,
+      version="7.2.1+infer.0.1.2",
       description="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers.",
       author='David Drysdale',
       author_email='dmd@lurklurk.org',
