@@ -22,7 +22,7 @@ with Java regular expression code.
 1
 """
 import re
-import cachetools
+from cachetools.func import _CacheInfo
 
 def fullmatch(pattern, string, flags=0):
     """Try to apply the pattern at the start of the string, returning a match
@@ -38,7 +38,30 @@ def fullmatch(pattern, string, flags=0):
         m = None  # pragma no cover
     return m
 
-@cachetools.func.lru_cache(maxsize=4096)
+def cached(func):
+    cache = dict()
+    stats = [0, 0]
+    def cache_info():
+        hits, misses = stats
+        size = len(cache)
+        return _CacheInfo(hits, misses, size, size)
+
+    def decorated(*args, **kwargs):
+        key = (tuple(args), tuple(sorted(kwargs.items())) if kwargs else None)
+        res = cache.get(key)
+        if res is None:
+            stats[1] += 1
+            res = func(*args, **kwargs)
+            cache[key] = res
+        else:
+            stats[0] += 1
+        return res
+
+    decorated.cache_info = cache_info
+    decorated.cache = cache
+    return decorated
+
+@cached
 def re_compile(pattern, flags=0):
     return re.compile(pattern, flags)
 
