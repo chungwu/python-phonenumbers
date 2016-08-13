@@ -22,7 +22,6 @@ with Java regular expression code.
 1
 """
 import re
-from cachetools.func import _CacheInfo
 
 def fullmatch(pattern, string, flags=0):
     """Try to apply the pattern at the start of the string, returning a match
@@ -44,7 +43,7 @@ def cached(func):
     def cache_info():
         hits, misses = stats
         size = len(cache)
-        return _CacheInfo(hits, misses, size, size)
+        return dict(hits=hits, misses=misses, currsize=size)
 
     def decorated(*args, **kwargs):
         key = (tuple(args), tuple(sorted(kwargs.items())) if kwargs else None)

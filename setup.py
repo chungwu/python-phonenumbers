@@ -27,7 +27,7 @@ if not python_25:
 sys.path.append('python')
 
 setup(name='phonenumbers',
-      version="7.2.1+infer.0.1.3",
+      version="7.2.1+infer.0.1.4",
       description="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers.",
       author='David Drysdale',
       author_email='dmd@lurklurk.org',
@@ -38,7 +38,7 @@ setup(name='phonenumbers',
       package_dir={'': 'python'},
       test_suite="tests.examplenumberstest",
       platforms='Posix; MacOS X; Windows',
-      install_requires = ['cachetools'],
+      install_requires = [],
       classifiers=['Development Status :: 5 - Production/Stable',
                    'Intended Audience :: Developers',
                    'License :: OSI Approved :: Apache Software License',
